@@ -12,15 +12,10 @@ public class FileOperateTest {
     @Test
     public void rename_test() {
 
-        try {
-            FileOperate.rename(filepath + filename_old, filepath + filename_new);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String path = "C:\\CODE\\dir\\AKMU - Drift [qmms2].mp3";
+        System.out.println("1" + path);
+        path = path.replace(" \\[qmms2\\]", "");
+        System.out.println("2" + path);
     }
 
-    @Test
-    public void menu_test() {
-        Menu.main_menu();
-    }
 }
