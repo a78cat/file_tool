@@ -1,3 +1,8 @@
+package com.shrewd.model;
+
+import com.shrewd.controller.FileOperate;
+import com.shrewd.view.Menu;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -7,6 +12,13 @@ public class Main {
     private static Scanner sc_nextline = new Scanner(System.in);
     private static String command = "";
     private static String path = "/";
+
+    // 指定加密格式扩展名匹配规则
+    private static final String FILENAME_SUFFIX_REGEX = ".*\\.(qmcflac|qmc0)$";
+    // 为无扩展名的文件添加指定扩展名
+    private static final String FILENAME_SUFFIX = ".qmcflac";
+    // 指定去除特定文字的规则
+    private static final String FILENAME_CONTAINS_REGEX = "( \\[qmms\\])|( \\[qmms2\\])";
 
     public static void main(String[] args) {
 
@@ -32,6 +44,10 @@ public class Main {
                     command = "";
                     rename_file();
                     break;
+                case "5": // 添加扩展名
+                    command = "";
+                    add_exfilename();
+                    break;
                 default: // 主菜单
                     Menu.main_menu(path);
                     command = sc_next.next();
@@ -40,11 +56,39 @@ public class Main {
         }
     }
 
+    private static boolean add_exfilename() {
+        Menu.add_file_extension_name_hint();
+        String[] filename_list = FileOperate.get_current_dir_filenames(path);
+        int flag = 0; // 修改失败计数
+        for (String filename: filename_list) {
+            String old_name = path + filename;
+            if (!filename.matches(FILENAME_SUFFIX_REGEX)) {
+                filename += FILENAME_SUFFIX;
+            }
+            String new_name = path + filename;
+            if (!FileOperate.rename(old_name, new_name)) {
+                flag++;
+            }
+        }
+        Menu.add_file_extension_name_ok_hint(filename_list.length, flag);
+        while (true) {
+            command = sc_next.next();
+            if ("0".equals(command)) {
+                command = "";
+                break;
+            }
+        }
+        return true;
+    }
+
     // 展示当前目录下的文件
     private static boolean show_current_dir_content() {
         while (true) {
-            FileOperate.show_current_dir_files(path);
-            Menu.show_dir_content_hint(FileOperate.get_current_dir_file_count(path));
+            String[] filenames = FileOperate.get_current_dir_filenames(path);
+            int file_count = filenames.length;
+            if (null != filenames) {
+                Menu.show_dir_content(filenames, file_count);
+            }
             command = sc_next.next();
             if ("0".equals(command)) {
                 command = "";
@@ -83,12 +127,19 @@ public class Main {
         int flag = 0; // 修改失败计数
         for (String filename: filename_list) {
             String old_name = path + filename;
-            String new_name = old_name.replaceAll("( \\[qmms\\])|( \\[qmms2\\])", "");
+            String new_name = old_name.replaceAll(FILENAME_CONTAINS_REGEX, "");
             if (!FileOperate.rename(old_name, new_name)) {
                 flag++;
             }
         }
         Menu.rename_file_ok_hint(filename_list.length, flag);
+        while (true) {
+            command = sc_next.next();
+            if ("0".equals(command)) {
+                command = "";
+                break;
+            }
+        }
         return true;
     }
 
@@ -99,9 +150,8 @@ public class Main {
             command = sc_next.next();
             if ("Y".equals(command) || "y".equals(command)) {
                 System.out.println("bye");
-                // 释放资源
-                sc_next.close();
-                sc_nextline.close();
+                sc_next.close(); // 释放资源
+                sc_nextline.close(); // 释放资源
                 System.exit(1);
             } else if ("N".equals(command) || "n".equals(command)) {
                 command = "";

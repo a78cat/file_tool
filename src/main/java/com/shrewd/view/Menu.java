@@ -1,3 +1,5 @@
+package com.shrewd.view;
+
 public class Menu {
     public static void main_menu(String path) {
         System.out.println("----欢迎使用文件批量改名工具v0.1----");
@@ -7,10 +9,11 @@ public class Menu {
         System.out.println("1.关于");
         System.out.println("2.设置文件夹路径");
         System.out.println("3.查看当前目录下的所有文件");
-        System.out.println("4.修改文件名");
+        System.out.println("4.删除文件名中“ [qmms2]”");
+        System.out.println("5.添加“.qmcflac”扩展名");
     }
 
-    // 关于菜单
+    // 关于
     public static void about_menu() {
         System.out.println("2022年11月25日制作 78cat made");
         System.out.println(">输入0返回主菜单");
@@ -32,8 +35,20 @@ public class Menu {
     }
 
     // 查看当前目录下的所有文件
-    public static void show_dir_content_hint(int file_count) {
+    public static void show_dir_content(String[] files, int file_count) {
+        for (String filename: files) {
+            System.out.println(filename);
+        }
         System.out.println(">共计" + file_count + "个文件，展示完毕，输入0返回主菜单");
+    }
+
+    // 开始添加扩展名
+    public static void add_file_extension_name_hint() {
+        System.out.println("添加扩展名开始咯...");
+    }
+    public static void add_file_extension_name_ok_hint(int file_count, int change_fail_count) {
+        System.out.println(">添加扩展名完成，输入0返回主菜单");
+        System.out.println("当前目录下共有" + file_count + "个文件，修改失败" + change_fail_count + "个");
     }
 
     // 开始修改文件名
