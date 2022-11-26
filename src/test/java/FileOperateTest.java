@@ -18,4 +18,20 @@ public class FileOperateTest {
         System.out.println("2" + path);
     }
 
+    @Test
+    public void add_exname_test() {
+        String file_exname_regex = ".*\\.(jpg|png|gif|bmp|jpeg)$";
+        String filename = "..jpg.jpg";
+        System.out.println("filename:" + filename);
+        if (!filename.matches(file_exname_regex)) {
+            if (filename.endsWith(".")) {
+                filename += "qmcflac";
+            } else {
+                filename += ".qmcflac";
+            }
+
+        }
+        String new_name = filename;
+        System.out.println("new_name:" + new_name);
+    }
 }
