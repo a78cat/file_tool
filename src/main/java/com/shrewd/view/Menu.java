@@ -1,3 +1,5 @@
+package com.shrewd.view;
+
 public class Menu {
     public static void main_menu(String path) {
         System.out.println("----欢迎使用文件批量改名工具v0.1----");

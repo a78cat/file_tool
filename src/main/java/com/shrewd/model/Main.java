@@ -1,3 +1,8 @@
+package com.shrewd.model;
+
+import com.shrewd.controller.FileOperate;
+import com.shrewd.view.Menu;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -7,7 +12,12 @@ public class Main {
     private static Scanner sc_nextline = new Scanner(System.in);
     private static String command = "";
     private static String path = "/";
-    private static final String FILENAME_SUFFIX_REGEX = ".*\\.(jpg|png|gif|bmp|jpeg)$";
+
+    // 指定加密格式扩展名匹配规则
+    private static final String FILENAME_SUFFIX_REGEX = ".*\\.(qmcflac|qmc0)$";
+    // 为无扩展名的文件添加指定扩展名
+    private static final String FILENAME_SUFFIX = ".qmcflac";
+    // 指定去除特定文字的规则
     private static final String FILENAME_CONTAINS_REGEX = "( \\[qmms\\])|( \\[qmms2\\])";
 
     public static void main(String[] args) {
@@ -52,8 +62,8 @@ public class Main {
         int flag = 0; // 修改失败计数
         for (String filename: filename_list) {
             String old_name = path + filename;
-            if (!filename.contains(".")) {
-                filename += ".qmcflac";
+            if (!filename.matches(FILENAME_SUFFIX_REGEX)) {
+                filename += FILENAME_SUFFIX;
             }
             String new_name = path + filename;
             if (!FileOperate.rename(old_name, new_name)) {
@@ -61,6 +71,13 @@ public class Main {
             }
         }
         Menu.add_file_extension_name_ok_hint(filename_list.length, flag);
+        while (true) {
+            command = sc_next.next();
+            if ("0".equals(command)) {
+                command = "";
+                break;
+            }
+        }
         return true;
     }
 
@@ -116,6 +133,13 @@ public class Main {
             }
         }
         Menu.rename_file_ok_hint(filename_list.length, flag);
+        while (true) {
+            command = sc_next.next();
+            if ("0".equals(command)) {
+                command = "";
+                break;
+            }
+        }
         return true;
     }
 
@@ -126,9 +150,8 @@ public class Main {
             command = sc_next.next();
             if ("Y".equals(command) || "y".equals(command)) {
                 System.out.println("bye");
-                // 释放资源
-                sc_next.close();
-                sc_nextline.close();
+                sc_next.close(); // 释放资源
+                sc_nextline.close(); // 释放资源
                 System.exit(1);
             } else if ("N".equals(command) || "n".equals(command)) {
                 command = "";
