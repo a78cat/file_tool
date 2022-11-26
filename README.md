@@ -19,14 +19,10 @@ https://demo.unlock-music.dev/
 
 1. 运行cmd
    执行java -jar file_tool-1.0-SNAPSHOT.jar
-   ![image-20221126103741123](C:\Users\shrewd\AppData\Roaming\Typora\typora-user-images\image-20221126103741123.png)
-2. 复制你要批量修改的目录，如下图：
+2. 复制你要批量修改的目录，如下图：（图片不见了！）
    C:\CODE\QQMusic
    其中部分文件名包含“ [qmms2]”
-   ![image-20221126101238660](C:\Users\shrewd\AppData\Roaming\Typora\typora-user-images\image-20221126101238660.png)
 3. 输入2，回车，以设置文件夹路径
-   ![image-20221126103958979](C:\Users\shrewd\AppData\Roaming\Typora\typora-user-images\image-20221126103958979.png)
 4. 可以看到当前文件夹路径已经设置好了
    然后选择4，回车，以删除文件名中“ [qmms2]”
 5. 软件提示结果，可以看到所有文件已经没了后缀
-   ![image-20221126104216476](C:\Users\shrewd\AppData\Roaming\Typora\typora-user-images\image-20221126104216476.png)
